@@ -2,18 +2,16 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>Versorgung Eltern</title>
-
-<!-- PWA -->
-<link relwebmanifest
-<meta name="theme-color" content="#f2a45f" />
+<meta name="viewport" content="width=device-width, initial-scale=1,45f" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="Versorgung Eltern" />
 
 <!-- iPhone + Android Icon -->
-<link rel="apple-touch-icon" href="icons/SVG-Vorschau>
+<link/SVG-Vorschau.png
+icons/SVG-Vorschau.png
+
+<style>
 :root{
   --bg:#f7f7f7; --card:#fff; --text:#111; --muted:#666;
   --primary:#2e7d32; --secondary:#6b7280; --danger:#c62828; --border:#e5e7eb;
@@ -161,209 +159,51 @@ th{background:#fafafa;}
 <div id="toast" class="toast"></div>
 
 <script>
-// Kleine Utility-Funktionen
 const $=id=>document.getElementById(id);
 const todayISO=()=>new Date().toISOString().slice(0,10);
-
 function kmDiff(a,b){a=+a;b=+b;return isNaN(a)||isNaN(b)?null:Math.max(0,b-a);}
-function computeDuration(s,e){
-  if(!s||!e) return null;
-  let [sh,sm]=s.split(":").map(Number);
-  let [eh,em]=e.split(":").map(Number);
-  let start=sh*60+sm, end=eh*60+em;
-  if(end<start) end+=1440;
-  let diff=end-start;
-  return {minutes:diff,text:`${Math.floor(diff/60)} Std ${diff%60} Min`};
-}
-function toast(t){
-  const el=$("toast"); el.textContent=t; el.style.display="block";
-  clearTimeout(toast._t); toast._t=setTimeout(()=>el.style.display="none",2000);
-}
+function computeDuration(s,e){if(!s||!e)return null;let[sh,sm]=s.split(":").map(Number);let[eh,em]=e.split(":").map(Number);let st=sh*60+sm,en=eh*60+em;if(en<st)en+=1440;let d=en-st;return{minutes:d,text:`${Math.floor(d/60)} Std ${d%60} Min`};}
+function toast(t){const el=$("toast");el.textContent=t;el.style.display="block";clearTimeout(toast._t);toast._t=setTimeout(()=>el.style.display="none",2000);}
 
 // Speicher (localStorage)
-const Storage={
-  key:"fahrtenbuch_data_v1",
-  get(){return JSON.parse(localStorage.getItem(this.key)||"[]");},
-  save(a){localStorage.setItem(this.key,JSON.stringify(a));}
-};
+const Storage={key:"fahrtenbuch_data_v1",get(){return JSON.parse(localStorage.getItem(this.key)||"[]");},save(a){localStorage.setItem(this.key,JSON.stringify(a));}};
 
-// App-Funktionen
 let editId=null;
 
-function populateMonths(){
-  const sel=$("monthSelect"); sel.innerHTML="";
-  let now=new Date();
-  for(let i=0;i<24;i++){
-    let d=new Date(now.getFullYear(),now.getMonth()-i,1);
-    let val=d.toISOString().slice(0,7);
-    let txt=d.toLocaleString("de-DE",{month:"long",year:"numeric"});
-    let opt=document.createElement("option"); opt.value=val; opt.textContent=txt;
-    sel.appendChild(opt);
-  }
-}
+function populateMonths(){const sel=$("monthSelect");sel.innerHTML="";let now=new Date();for(let i=0;i<24;i++){let d=new Date(now.getFullYear(),now.getMonth()-i,1);let v=d.toISOString().slice(0,7);let t=d.toLocaleString("de-DE",{month:"long",year:"numeric"});let o=document.createElement("option");o.value=v;o.textContent=t;sel.appendChild(o);} sel.value=new Date().toISOString().slice(0,7);}
 
-function load(){
-  let q=$("search").value.toLowerCase();
-  let m=$("monthSelect").value;
-  let rows=Storage.get().filter(r=>r.datum.startsWith(m))
-    .filter(r=>!q || r.route.toLowerCase().includes(q) || r.aufgabe.toLowerCase().includes(q));
-  render(rows);
-}
+function load(){let q=$("search").value.toLowerCase();let m=$("monthSelect").value;let rows=Storage.get().filter(r=>r.datum?.startsWith(m)).filter(r=>!q||r.route?.toLowerCase().includes(q)||r.aufgabe?.toLowerCase().includes(q)); render(rows);}
 
-function render(rows){
-  let html=`<tr><th>Datum</th><th>Aufgabe</th><th>Route</th>
-            <th>Start</th><th>Ende</th><th>Dauer</th><th>KM</th><th></th></tr>`;
-  let sumKm=0,sumMin=0;
+function render(rows){let html=`<tr><th>Datum</th><th>Aufgabe</th><th>Route</th><th>Start</th><th>Ende</th><th>Dauer</th><th>KM</th><th></th></tr>`;let sumKm=0,sumMin=0;rows.forEach(r=>{let km=kmDiff(r.startkm,r.endkm)||0;let dur=computeDuration(r.startzeit,r.endzeit);sumKm+=km;sumMin+=dur?.minutes||0;html+=`<tr><td>${r.datum}</td><td>${r.aufgabe}</td><td>${r.route}</td><td>${r.startzeit}</td><td>${r.endzeit}</td><td>${dur?dur.text:"-"}</td><td>${km}</td><td class="row-actions"><button class="secondary" onclick="edit(${r.id})">✏️</button><button class="danger" onclick="del(${r.id})">🗑️</button></td></tr>`;});$("table").innerHTML=html;$("summary").innerHTML=rows.length?`<span class="pill">Fahrten: ${rows.length}</span><span class="pill">KM: ${sumKm}</span><span class="pill">Dauer: ${Math.floor(sumMin/60)} Std ${sumMin%60} Min</span>`:"Keine Daten";}
 
-  rows.forEach(r=>{
-    let km=kmDiff(r.startkm,r.endkm)||0;
-    let dur=computeDuration(r.startzeit,r.endzeit);
-    sumKm+=km; sumMin+=dur?.minutes||0;
+function save(){let r=$("route").value.trim();if(r&&!r.includes("Hin und Rückfahrt"))r+=" (Hin und Rückfahrt)";let e={id:editId??Date.now(),datum:$("datum").value,aufgabe:$("aufgabe").value,route:r,startzeit:$("startzeit").value,endzeit:$("endzeit").value,startkm:+$("startkm").value,endkm:+$("endkm").value};let a=Storage.get();if(editId)a=a.map(x=>x.id===editId?e:x);else a.push(e);Storage.save(a);clear();load();toast("Gespeichert");}
+function edit(id){let r=Storage.get().find(x=>x.id===id);if(!r)return;$("datum").value=r.datum;$("aufgabe").value=r.aufgabe;$("route").value=r.route.replace(" (Hin und Rückfahrt)","");$("startzeit").value=r.startzeit;$("endzeit").value=r.endzeit;$("startkm").value=r.startkm;$("endkm").value=r.endkm;editId=id;$("saveBtn").textContent="Aktualisieren";window.scrollTo({top:0,behavior:"smooth"});}
+function del(id){if(!confirm("Eintrag löschen?"))return;Storage.save(Storage.get().filter(x=>x.id!==id));load();toast("Gelöscht");}
+function clear(){editId=null;$("saveBtn").textContent="Speichern";$("datum").value=todayISO();$("route").value="";$("startzeit").value="";$("endzeit").value="";$("startkm").value="";$("endkm").value="";}
 
-    html+=`<tr>
-      <td>${r.datum}</td>
-      <td>${r.aufgabe}</td>
-      <td>${r.route}</td>
-      <td>${r.startzeit}</td>
-      <td>${r.endzeit}</td>
-      <td>${dur?dur.text:"-"}</td>
-      <td>${km}</td>
-      <td class="row-actions">
-        <button class="secondary" onclick="edit(${r.id})">✏️</button>
-        <button class="danger" onclick="del(${r.id})">🗑️</button>
-      </td>
-    </tr>`;
-  });
+function exportCSV(){let d=Storage.get();let csv="Datum;Aufgabe;Route;Start;Ende;StartKM;EndKM;KM;Dauer\n";d.forEach(r=>{let km=r.endkm-r.startkm;let dur=computeDuration(r.startzeit,r.endzeit)?.text||"";csv+=`${r.datum};${r.aufgabe};${r.route};${r.startzeit};${r.endzeit};${r.startkm};${r.endkm};${km};${dur}\n`;});let blob=new Blob([csv],{type:"text/csv"});let url=URL.createObjectURL(blob);let a=document.createElement("a");a.href=url;a.download="fahrtenbuch.csv";a.click();}
+function backup(){let data=Storage.get();let blob=new Blob([JSON.stringify({entries:data},null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="backup.json";a.click();}
+function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let j=JSON.parse(r.result);if(!j.entries)return alert("Ungültige Datei");if($("clearBeforeRestore").checked)Storage.save(j.entries);else Storage.save([...Storage.get(),...j.entries]);load();alert("Restore OK");}catch{alert("Fehlerhafte Datei!");}};r.readAsText(f);}
 
-  $("table").innerHTML=html;
-  $("summary").innerHTML=rows.length
-    ? `<span class="pill">Fahrten: ${rows.length}</span>
-       <span class="pill">KM: ${sumKm}</span>
-       <span class="pill">Dauer: ${Math.floor(sumMin/60)} Std ${sumMin%60} Min</span>`
-    : "Keine Daten";
-}
-
-function save(){
-  let r=$("#route").value.trim();
-  if(r && !r.includes("Hin und Rückfahrt")) r+=" (Hin und Rückfahrt)";
-
-  let entry={
-    id:editId ?? Date.now(),
-    datum:$("#datum").value,
-    aufgabe:$("#aufgabe").value,
-    route:r,
-    startzeit:$("#startzeit").value,
-    endzeit:$("#endzeit").value,
-    startkm:+$("#startkm").value,
-    endkm:+$("#endkm").value
-  };
-
-  let arr=Storage.get();
-  if(editId) arr=arr.map(x=>x.id===editId?entry:x);
-  else arr.push(entry);
-
-  Storage.save(arr);
-  clear();
-  load();
-  toast("Gespeichert");
-}
-
-function edit(id){
-  let r=Storage.get().find(x=>x.id===id);
-  if(!r) return;
-  $("#datum").value=r.datum;
-  $("#aufgabe").value=r.aufgabe;
-  $("#route").value=r.route.replace(" (Hin und Rückfahrt)","");
-  $("#startzeit").value=r.startzeit;
-  $("#endzeit").value=r.endzeit;
-  $("#startkm").value=r.startkm;
-  $("#endkm").value=r.endkm;
-  editId=id;
-  $("#saveBtn").textContent="Aktualisieren";
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function del(id){
-  if(!confirm("Eintrag löschen?")) return;
-  Storage.save(Storage.get().filter(x=>x.id!==id));
-  load();
-  toast("Gelöscht");
-}
-
-function clear(){
-  editId=null;
-  $("#saveBtn").textContent="Speichern";
-  $("#datum").value=todayISO();
-  $("#route").value="";
-  $("#startzeit").value="";
-  $("#endzeit").value="";
-  $("#startkm").value="";
-  $("#endkm").value="";
-}
-
-// Export
-function exportCSV(){
-  let data=Storage.get();
-  let csv="Datum;Aufgabe;Route;Start;Ende;StartKM;EndKM;KM;Dauer\n";
-  data.forEach(r=>{
-    let km=r.endkm-r.startkm;
-    let dur=computeDuration(r.startzeit,r.endzeit)?.text||"";
-    csv+=`${r.datum};${r.aufgabe};${r.route};${r.startzeit};${r.endzeit};${r.startkm};${r.endkm};${km};${dur}\n`;
-  });
-  let blob=new Blob([csv],{type:"text/csv"});
-  let url=URL.createObjectURL(blob);
-  let a=document.createElement("a");a.href=url;a.download="fahrtenbuch.csv";a.click();
-}
-
-// Backup
-function backup(){
-  let data=Storage.get();
-  let b=new Blob([JSON.stringify({entries:data},null,2)],{type:"application/json"});
-  let a=document.createElement("a");
-  a.href=URL.createObjectURL(b);
-  a.download="backup.json"; a.click();
-}
-
-// Restore
-function restore(e){
-  let file=e.target.files[0];
-  let fr=new FileReader();
-  fr.onload=function(){
-    try{
-      let json=JSON.parse(fr.result);
-      if(!json.entries) return alert("Ungültige Datei");
-      if($("#clearBeforeRestore").checked) Storage.save(json.entries);
-      else Storage.save([...Storage.get(),...json.entries]);
-      load();
-      alert("Restore OK");
-    }catch{
-      alert("Fehlerhafte Datei!");
-    }
-  };
-  fr.readAsText(file);
-}
-
-// Init
 (function(){
-  $("#datum").value=todayISO();
+  $("datum").value=todayISO();
   populateMonths();
   load();
 
-  $("#searchBtn").onclick=load;
-  $("#searchResetBtn").onclick=()=>{$("#search").value="";load();};
-  $("#saveBtn").onclick=save;
-  $("#resetBtn").onclick=clear;
-  $("#monthSelect").onchange=load;
-  $("#exportBtn").onclick=exportCSV;
-  $("#backupBtn").onclick=backup;
-  $("#restoreBtn").onclick=()=>$("#restoreFile").click();
-  $("#restoreFile").onchange=restore;
-  $("#printBtn").onclick=()=>window.print();
+  $("searchBtn").onclick=load;
+  $("searchResetBtn").onclick=()=>{$("search").value="";load();};
+  $("saveBtn").onclick=save;
+  $("resetBtn").onclick=clear;
+  $("monthSelect").onchange=load;
+  $("exportBtn").onclick=exportCSV;
+  $("backupBtn").onclick=backup;
+  $("restoreBtn").onclick=()=>$("restoreFile").click();
+  $("restoreFile").onchange=restore;
+  $("printBtn").onclick=()=>window.print();
 
   // Installationshinweis
-  if(!window.navigator.standalone &&
-     !window.matchMedia('(display-mode: standalone)').matches){
-    $("#installHint").style.display="block";
+  if(!window.navigator.standalone && !window.matchMedia('(display-mode: standalone)').matches){
+    $("installHint").style.display="block";
   }
 
   // Service Worker
@@ -375,3 +215,7 @@ function restore(e){
 
 </body>
 </html>
+<title>Versorgung Eltern</title>
+
+<!-- PWA -->
+manifest.webmanifest
