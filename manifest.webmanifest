@@ -1,7 +1,4 @@
-{
-  "name": "Versorgung Eltern",
-  "short_name": "Versorgung Eltern",
-  "start_url": "./index.html",
+{.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fff7ed",
@@ -15,15 +12,6 @@
     }
   ]
 }
-``{
+
   "name": "Versorgung Eltern",
   "short_name": "Versorgung Eltern",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#fff7ed",
-  "theme_color": "#f2a45f",
-  "icons": [
-    { "src": "SVG-Vorschau.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" }
-  ]
-}
