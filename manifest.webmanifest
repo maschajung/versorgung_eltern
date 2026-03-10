@@ -1,0 +1,12 @@
+{
+  "name": "Versorgung Eltern",
+  "short_name": "Versorgung Eltern",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff7ed",
+  "theme_color": "#f2a45f",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
