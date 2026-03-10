@@ -1,1 +1,336 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Versorgung Eltern</title>
 
+<!-- PWA -->
+<link rel="manifest"
+<meta name="theme-color" content="#f2a45f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Versorgung Eltern">
+
+<!-- Icons -->
+<link rel="apple-touch-icon" href="icons/SVG-V
+<style>
+:root{--bg:#f7f7f7;--card:#fff;--text:#111;--muted:#666;--primary:#2e7d32;--secondary:#6b7280;--danger:#c62828;--border:#e5e7eb;}
+*{box-sizing:border-box;}
+body{margin:0;padding:16px;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;}
+h2,h3{margin-top:0;}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.header img{width:48px;height:48px;border-radius:10px;}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;}
+label{font-size:15px;margin-top:8px;display:block;}
+input,select{width:100%;padding:12px;margin-top:4px;font-size:17px;border-radius:10px;border:1px solid #ccc;}
+.row{display:flex;gap:12px;flex-wrap:wrap;}
+.row>*{flex:1;}
+
+button{width:100%;padding:14px;margin-top:12px;border:none;border-radius:12px;font-size:17px;color:white;background:var(--primary);}
+button.secondary{background:var(--secondary);}
+button.danger{background:var(--danger);}
+
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;}
+th,td{padding:10px;border-bottom:1px solid #eee;}
+th{background:#fafafa;}
+
+.row-actions{display:flex;gap:5px;}
+.row-actions button{width:auto;padding:6px 8px;}
+
+.pill{display:inline-block;background:#e0e0e0;border-radius:999px;padding:4px 8px;margin-right:6px;font-size:13px;}
+.muted{color:var(--muted);}
+.toast{position:fixed;left:12px;right:12px;bottom:18px;background:#222;color:white;padding:12px;border-radius:12px;display:none;}
+
+@media print{
+  body{padding:0;}
+  .card:not(#printArea){display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img src="icons/SVG-Vorschh2>Versorgung Eltern</h2>
+</div>
+
+<div class="card" id="installHint" style="display:none">
+  <strong>Als App installieren:</strong>
+  <div class="hint">Safari → Teilen → „Zum Home‑Bildschirm“</div>
+</div>
+
+<div class="card">
+  <div class="row">
+    <div><label>Datum</label><input type="date" id="datum"></div>
+    <div><label>Aufgabe</label>
+      <select id="aufgabe">
+        <option>Einkauf</option><option>Haushalt</option>
+        <option>Arztbesuch</option><option>Gartenarbeiten</option>
+        <option>Bürotätigkeiten</option><option>Handwerker</option>
+        <option>Versorgung Eltern</option><option>Sonstiges</option>
+      </select>
+    </div>
+  </div>
+
+  <label>Route</label>
+  <input id="route" type="text" placeholder="z. B. Rodenbach → Seligenstadt">
+
+  <div class="row">
+    <div><label>Startzeit</label><input type="time" id="startzeit"></div>
+    <div><label>Endzeit</label><input type="time" id="endzeit"></div>
+  </div>
+
+  <div class="row">
+    <div><label>Start‑KM</label><input type="number" id="startkm"></div>
+    <div><label>End‑KM</label><input type="number" id="endkm"></div>
+  </div>
+
+  <button id="saveBtn">Speichern</button>
+  <button class="secondary" id="resetBtn">Reset</button>
+</div>
+
+<div class="card">
+  <h3>Suche & Monat</h3>
+  <div class="row">
+    <input id="search" type="text" placeholder="Route, Aufgabe …">
+    <select id="monthSelect"></select>
+  </div>
+  <button class="secondary" id="searchBtn">Suchen</button>
+  <button class="secondary" id="searchResetBtn">Reset</button>
+</div>
+
+<div class="card" id="printArea">
+  <h3>Liste</h3>
+  <div id="summary" class="muted">Keine Daten</div>
+  <table id="table"></table>
+  <button id="printBtn" class="secondary">🖨️ Drucken</button>
+</div>
+
+<div class="card">
+  <h3>Export / Backup</h3>
+  <button id="exportBtn">💾 CSV exportieren</button>
+  <button class="secondary" id="backupBtn">⬇️ Backup JSON</button>
+
+  <input id="restoreFile" type="file" accept=".json" style="display:none">
+  <div class="row">
+    <button class="secondary" id="restoreBtn">⬆️ Restore JSON</button>
+    <label><input id="clearBeforeRestore" type="checkbox"> Vorher löschen</label>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const todayISO=()=>new Date().toISOString().slice(0,10);
+
+const Storage={
+ key:"fahrtenbuch_data_v1",
+ get(){return JSON.parse(localStorage.getItem(this.key)||"[]");},
+ save(a){localStorage.setItem(this.key,JSON.stringify(a));}
+};
+
+let editId=null;
+
+function loadMonths(){
+  const sel=$("monthSelect");
+  sel.innerHTML="";
+  const now=new Date();
+  for(let i=0;i<24;i++){
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    const v=d.toISOString().slice(0,7);
+    const t=d.toLocaleString("de-DE",{month:"long",year:"numeric"});
+    const o=document.createElement("option");
+    o.value=v;o.textContent=t;
+    sel.appendChild(o);
+  }
+}
+
+function load(){
+  const q=$("search").value.trim().toLowerCase();
+  const m=$("monthSelect").value;
+  const rows=Storage.get()
+    .filter(r=>r.datum.startsWith(m))
+    .filter(r=>!q||r.route.toLowerCase().includes(q)||r.aufgabe.toLowerCase().includes(q));
+  render(rows);
+}
+
+function render(rows){
+  let html=`<tr><th>Datum</th><th>Aufgabe</th><th>Route</th>
+  <th>Start</th><th>Ende</th><th>Dauer</th><th>KM</th><th></th></tr>`;
+
+  let sumKm=0, sumMin=0;
+
+  rows.forEach(r=>{
+    let km=r.endkm-r.startkm;
+    sumKm+=km;
+    let dur=getDur(r.startzeit,r.endzeit);
+    sumMin+=dur.min;
+
+    html+=`<tr>
+      <td>${r.datum}</td>
+      <td>${r.aufgabe}</td>
+      <td>${r.route}</td>
+      <td>${r.startzeit}</td>
+      <td>${r.endzeit}</td>
+      <td>${dur.txt}</td>
+      <td>${km}</td>
+      <td class="row-actions">
+        <button class="secondary" onclick="edit(${r.id})">✏️</button>
+        <button class="danger" onclick="del(${r.id})">🗑️</button>
+      </td>
+    </tr>`;
+  });
+
+  $("table").innerHTML=html;
+
+  $("summary").innerHTML=rows.length
+   ? `<span class="pill">Fahrten: ${rows.length}</span>
+      <span class="pill">KM: ${sumKm}</span>
+      <span class="pill">Dauer: ${Math.floor(sumMin/60)} Std ${sumMin%60} Min</span>`
+   : "Keine Daten";
+}
+
+function getDur(s,e){
+  if(!s||!e) return {min:0,txt:"-"};
+  let [sh,sm]=s.split(":").map(Number);
+  let [eh,em]=e.split(":").map(Number);
+  let start=sh*60+sm, end=eh*60+em;
+  if(end<start) end+=1440;
+  let diff=end-start;
+  return {min:diff,txt:`${Math.floor(diff/60)} Std ${diff%60} Min`};
+}
+
+function save(){
+  let route=$("route").value.trim();
+  if(route&&!route.includes("(Hin und Rückfahrt)"))
+     route+=" (Hin und Rückfahrt)";
+
+  let entry={
+    id:editId??Date.now(),
+    datum:$("datum").value,
+    aufgabe:$("aufgabe").value,
+    route,
+    startzeit:$("startzeit").value,
+    endzeit:$("endzeit").value,
+    startkm:+$("startkm").value,
+    endkm:+$("endkm").value
+  };
+
+  let arr=Storage.get();
+  if(editId) arr=arr.map(x=>x.id===editId?entry:x);
+  else arr.push(entry);
+
+  Storage.save(arr);
+  editId=null;
+  $("saveBtn").textContent="Speichern";
+  clear();
+  load();
+  show("Gespeichert");
+}
+
+function edit(id){
+  const r=Storage.get().find(x=>x.id===id); if(!r) return;
+  $("datum").value=r.datum;
+  $("aufgabe").value=r.aufgabe;
+  $("route").value=r.route.replace(" (Hin und Rückfahrt)","");
+  $("startzeit").value=r.startzeit;
+  $("endzeit").value=r.endzeit;
+  $("startkm").value=r.startkm;
+  $("endkm").value=r.endkm;
+  editId=id;
+  $("saveBtn").textContent="Aktualisieren";
+}
+
+function del(id){
+  if(!confirm("Löschen?"))return;
+  Storage.save(Storage.get().filter(x=>x.id!==id));
+  load();show("Gelöscht");
+}
+
+function clear(){
+  $("datum").value=todayISO();
+  $("route").value="";
+  $("startzeit").value="";
+  $("endzeit").value="";
+  $("startkm").value="";
+  $("endkm").value="";
+}
+
+function exportCSV(){
+  let arr=Storage.get();
+  let csv="Datum;Aufgabe;Route;Start;Ende;StartKM;EndKM;KM;Dauer\n";
+  arr.forEach(r=>{
+    let km=r.endkm-r.startkm;
+    let dur=getDur(r.startzeit,r.endzeit).txt;
+    csv+=`${r.datum};${r.aufgabe};${r.route};${r.startzeit};${r.endzeit};${r.startkm};${r.endkm};${km};${dur}\n`;
+  });
+  let blob=new Blob([csv],{type:"text/csv"});
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="fahrtenbuch.csv";
+  a.click();
+}
+
+function backup(){
+  let data=Storage.get();
+  let blob=new Blob([JSON.stringify({entries:data},null,2)],{type:"application/json"});
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="backup.json";
+  a.click();
+}
+
+function restore(evt){
+  let f=evt.target.files[0];
+  if(!f)return;
+  let reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      let j=JSON.parse(reader.result);
+      if(!j.entries)return alert("Ungültige Datei");
+      if($("clearBeforeRestore").checked)Storage.save(j.entries);
+      else Storage.save([...Storage.get(),...j.entries]);
+      load();
+      alert("Restore OK");
+    }catch{alert("Fehlerhafte Datei!");}
+  };
+  reader.readAsText(f);
+}
+
+function show(t){
+  const el=$("toast");
+  el.textContent=t;
+  el.style.display="block";
+  setTimeout(()=>el.style.display="none",2000);
+}
+
+(function(){
+  $("datum").value=todayISO();
+  loadMonths();
+  load();
+
+  $("saveBtn").onclick=save;
+  $("resetBtn").onclick=clear;
+  $("searchBtn").onclick=load;
+  $("searchResetBtn").onclick=()=>{$("search").value="";load();}
+  $("monthSelect").onchange=load;
+  $("exportBtn").onclick=exportCSV;
+  $("backupBtn").onclick=backup;
+  $("restoreBtn").onclick=()=>$("restoreFile").click();
+  $("restoreFile").onchange=restore;
+  $("printBtn").onclick=()=>window.print();
+
+  if(!navigator.standalone && !matchMedia("(display-mode: standalone)").matches){
+    $("installHint").style.display="block";
+  }
+
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("service-worker.js");
+  }
+})();
+</script>
+
+</body>
+</html>
