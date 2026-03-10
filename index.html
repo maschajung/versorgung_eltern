@@ -2,8 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>Versorgung Eltern</title>
 
 <!-- PWA -->
@@ -13,72 +12,74 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="Versorgung Eltern" />
 
-<!-- iOS App Icon (PNG) -->
-<link rel="apple-touch-icon" href="icons/SVG-Vorschau.png"icon" href="icons/SVG-Vorsch  --bg:#f7f7f7; --card:#fff; --text:#111; --muted:#666;
+<!-- iPhone + Android Icon -->
+<link rel="apple-touch-icon" href="icons/SVG-Vorschau>
+:root{
+  --bg:#f7f7f7; --card:#fff; --text:#111; --muted:#666;
   --primary:#2e7d32; --secondary:#6b7280; --danger:#c62828; --border:#e5e7eb;
 }
-*{box-sizing:border-box}
-body{margin:0;padding:16px;background:var(--bg);color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial}
-h2,h3{margin-top:0}
-.header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.header img{width:36px;height:36px}
+*{box-sizing:border-box;}
+body{margin:0;padding:16px;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;}
+h2,h3{margin-top:0;}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.header img{width:48px;height:48px;border-radius:12px;}
 
 .card{
   background:var(--card);border:1px solid var(--border);border-radius:14px;
-  padding:16px;margin-bottom:18px;box-shadow:0 2px 4px rgba(0,0,0,.05)
+  padding:16px;margin-bottom:18px;box-shadow:0 2px 4px rgba(0,0,0,.05);
 }
-label{font-size:15px;margin-top:8px;display:block}
+label{font-size:15px;margin-top:8px;display:block;}
 input,select{
-  width:100%;padding:14px;margin-top:4px;font-size:17px;border-radius:10px;border:1px solid #ccc;background:#fff
+  width:100%;padding:14px;margin-top:4px;font-size:17px;border-radius:10px;border:1px solid #ccc;background:#fff;
 }
-.row{display:flex;gap:12px;flex-wrap:wrap}.row>*{flex:1}
+.row{display:flex;gap:12px;flex-wrap:wrap;}
+.row>*{flex:1;}
 
 button{
   width:100%;padding:14px;margin-top:12px;border:none;border-radius:12px;
-  font-size:17px;color:#fff;background:var(--primary)
+  font-size:17px;color:#fff;background:var(--primary);
 }
-button.secondary{background:var(--secondary)}
-button.danger{background:var(--danger)}
+button.secondary{background:var(--secondary);}
+button.danger{background:var(--danger);}
 
 table{
-  width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:15px
+  width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:15px;
 }
-th,td{padding:10px;border-bottom:1px solid #eee;vertical-align:top}
-th{background:#fafafa}
+th,td{padding:10px;border-bottom:1px solid #eee;}
+th{background:#fafafa;}
 
-.row-actions{display:flex;gap:6px}
-.row-actions button{width:auto;padding:6px 8px;font-size:14px}
+.row-actions{display:flex;gap:6px;}
+.row-actions button{width:auto;padding:6px 8px;font-size:14px;}
 
-.pill{display:inline-block;background:#e0e0e0;border-radius:999px;padding:4px 8px;margin-right:6px;font-size:13px}
-.muted{color:var(--muted)}
-.toast{position:fixed;left:12px;right:12px;bottom:18px;background:#222;color:#fff;
-  padding:12px 14px;border-radius:10px;font-size:14px;opacity:.96;box-shadow:0 4px 12px rgba(0,0,0,.25);display:none;z-index:9}
-
+.pill{
+  display:inline-block;background:#e0e0e0;border-radius:999px;padding:4px 8px;margin-right:6px;font-size:13px;
+}
+.muted{color:var(--muted);}
+.toast{
+  position:fixed;left:12px;right:12px;bottom:18px;background:#222;color:#fff;
+  padding:12px 14px;border-radius:10px;font-size:14px;opacity:.95;display:none;z-index:10;
+}
 .hint{
-  background:#fff7ed;border:1px dashed #fdba74;color:#92400e;border-radius:12px;padding:10px;margin-top:8px;font-size:14px
+  background:#fff7ed;border:1px dashed #f59e0b;color:#92400e;border-radius:12px;padding:10px;margin-top:8px;font-size:14px;
 }
 
-/* Druck nur die Liste */
 @media print{
-  body{padding:0;background:#fff}
-  .card:not(#printArea){display:none !important}
-  #printArea{border:none;box-shadow:none}
+  body{padding:0;background:#fff;}
+  .card:not(#printArea){display:none !important;}
 }
 </style>
 </head>
+
 <body>
 
 <div class="header">
-  <img src="icons/SVG-Vorschau.png"orgung Eltern</h2>
+  icons/SVG-Vorschau.png
+  <h2>Versorgung Eltern</h2>
 </div>
 
-<!-- Installationshinweis -->
 <div id="installHint" class="card" style="display:none">
   <strong>Als App installieren:</strong>
-  <div class="hint">
-    In <b>Safari</b> öffnen → <b>Teilen</b> → <b>Zum Home‑Bildschirm</b>.
-  </div>
+  <div class="hint">In Safari → Teilen → „Zum Home‑Bildschirm“</div>
 </div>
 
 <!-- Formular -->
@@ -86,7 +87,7 @@ th{background:#fafafa}
   <div class="row">
     <div>
       <label>Datum</label>
-      <input type="date" id="datum" />
+      <input type="date" id="datum">
     </div>
     <div>
       <label>Aufgabe</label>
@@ -100,28 +101,16 @@ th{background:#fafafa}
   </div>
 
   <label>Route</label>
-  <input type="text" id="route" placeholder="z. B. Rodenbach → Seligenstadt" />
+  <input type="text" id="route" placeholder="z. B. Rodenbach → Seligenstadt">
 
   <div class="row">
-    <div>
-      <label>Startzeit</label>
-      <input type="time" id="startzeit" />
-    </div>
-    <div>
-      <label>Endzeit</label>
-      <input type="time" id="endzeit" />
-    </div>
+    <div><label>Startzeit</label><input type="time" id="startzeit"></div>
+    <div><label>Endzeit</label><input type="time" id="endzeit"></div>
   </div>
 
   <div class="row">
-    <div>
-      <label>Start‑KM</label>
-      <input type="number" id="startkm" />
-    </div>
-    <div>
-      <label>End‑KM</label>
-      <input type="number" id="endkm" />
-    </div>
+    <div><label>Start‑KM</label><input type="number" id="startkm"></div>
+    <div><label>End‑KM</label><input type="number" id="endkm"></div>
   </div>
 
   <div id="liveInfo" class="muted" style="margin-top:8px;"></div>
@@ -136,7 +125,7 @@ th{background:#fafafa}
 <div class="card">
   <h3>Suche & Monat</h3>
   <div class="row">
-    <input type="text" id="search" placeholder="Route, Aufgabe …" />
+    <input type="text" id="search" placeholder="Route, Aufgabe …">
     <select id="monthSelect"></select>
   </div>
   <div class="row">
@@ -159,11 +148,11 @@ th{background:#fafafa}
   <button id="exportBtn">💾 CSV exportieren</button>
   <button id="backupBtn" class="secondary">⬇️ Backup JSON</button>
 
-  <input type="file" id="restoreFile" accept=".json" style="display:none" />
+  <input type="file" id="restoreFile" accept=".json" style="display:none">
   <div class="row">
     <button id="restoreBtn" class="secondary">⬆️ Restore JSON</button>
     <label style="display:flex;align-items:center;gap:10px;flex:1">
-      <input type="checkbox" id="clearBeforeRestore" />
+      <input type="checkbox" id="clearBeforeRestore">
       <span>Vorher löschen</span>
     </label>
   </div>
@@ -172,64 +161,66 @@ th{background:#fafafa}
 <div id="toast" class="toast"></div>
 
 <script>
-/* ========= Utility ========= */
-const $ = id => document.getElementById(id);
-const todayISO = () => new Date().toISOString().slice(0,10);
+// Kleine Utility-Funktionen
+const $=id=>document.getElementById(id);
+const todayISO=()=>new Date().toISOString().slice(0,10);
 
-function kmDiff(a,b){ a=Number(a); b=Number(b); if(!Number.isFinite(a)||!Number.isFinite(b)) return null; return Math.max(0,b-a); }
+function kmDiff(a,b){a=+a;b=+b;return isNaN(a)||isNaN(b)?null:Math.max(0,b-a);}
 function computeDuration(s,e){
   if(!s||!e) return null;
-  const [sh,sm]=s.split(":").map(Number); const [eh,em]=e.split(":").map(Number);
-  let ss=sh*60+sm, ee=eh*60+em; if(ee<ss) ee+=1440;
-  const diff=ee-ss; return {minutes:diff, text:`${Math.floor(diff/60)} Std ${diff%60} Min`};
+  let [sh,sm]=s.split(":").map(Number);
+  let [eh,em]=e.split(":").map(Number);
+  let start=sh*60+sm, end=eh*60+em;
+  if(end<start) end+=1440;
+  let diff=end-start;
+  return {minutes:diff,text:`${Math.floor(diff/60)} Std ${diff%60} Min`};
 }
-function showToast(t){ const el=$("toast"); el.textContent=t; el.style.display="block"; clearTimeout(showToast._t); showToast._t=setTimeout(()=>el.style.display="none",2000); }
+function toast(t){
+  const el=$("toast"); el.textContent=t; el.style.display="block";
+  clearTimeout(toast._t); toast._t=setTimeout(()=>el.style.display="none",2000);
+}
 
-/* ========= Storage ========= */
-const Storage = (() => {
-  const KEY="fahrtenbuch_data_v1";
-  return {
-    getAll(){ return JSON.parse(localStorage.getItem(KEY) || "[]"); },
-    save(arr){ localStorage.setItem(KEY, JSON.stringify(arr)); }
-  };
-})();
+// Speicher (localStorage)
+const Storage={
+  key:"fahrtenbuch_data_v1",
+  get(){return JSON.parse(localStorage.getItem(this.key)||"[]");},
+  save(a){localStorage.setItem(this.key,JSON.stringify(a));}
+};
 
-/* ========= App ========= */
+// App-Funktionen
 let editId=null;
 
 function populateMonths(){
   const sel=$("monthSelect"); sel.innerHTML="";
-  const now=new Date(); const cur=now.toISOString().slice(0,7);
+  let now=new Date();
   for(let i=0;i<24;i++){
-    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
-    const val=d.toISOString().slice(0,7);
-    const txt=d.toLocaleString("de-DE",{month:"long",year:"numeric"});
-    const o=document.createElement("option"); o.value=val; o.textContent=txt;
-    sel.appendChild(o);
+    let d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    let val=d.toISOString().slice(0,7);
+    let txt=d.toLocaleString("de-DE",{month:"long",year:"numeric"});
+    let opt=document.createElement("option"); opt.value=val; opt.textContent=txt;
+    sel.appendChild(opt);
   }
-  sel.value=cur;
 }
 
-function loadEntries(){
-  const q=$("search").value.trim().toLowerCase();
-  const m=$("monthSelect").value;
-  const rows=Storage.getAll()
-    .filter(r=>r.datum.startsWith(m))
-    .filter(r=>!q || r.route.toLowerCase().includes(q) || r.aufgabe.toLowerCase().includes(q))
-    .sort((a,b)=>a.datum.localeCompare(b.datum));
+function load(){
+  let q=$("search").value.toLowerCase();
+  let m=$("monthSelect").value;
+  let rows=Storage.get().filter(r=>r.datum.startsWith(m))
+    .filter(r=>!q || r.route.toLowerCase().includes(q) || r.aufgabe.toLowerCase().includes(q));
   render(rows);
 }
 
-function render(list){
-  let sumKm=0, sumMin=0;
-  let html=`
-  <tr><th>Datum</th><th>Aufgabe</th><th>Route</th><th>Start</th><th>Ende</th><th>Dauer</th><th>KM</th><th></th></tr>`;
-  list.forEach(r=>{
-    const km=kmDiff(r.startkm,r.endkm)??0;
-    const dur=computeDuration(r.startzeit,r.endzeit);
-    sumKm+=km; sumMin+=dur?.minutes??0;
-    html+=`
-    <tr>
+function render(rows){
+  let html=`<tr><th>Datum</th><th>Aufgabe</th><th>Route</th>
+            <th>Start</th><th>Ende</th><th>Dauer</th><th>KM</th><th></th></tr>`;
+  let sumKm=0,sumMin=0;
+
+  rows.forEach(r=>{
+    let km=kmDiff(r.startkm,r.endkm)||0;
+    let dur=computeDuration(r.startzeit,r.endzeit);
+    sumKm+=km; sumMin+=dur?.minutes||0;
+
+    html+=`<tr>
       <td>${r.datum}</td>
       <td>${r.aufgabe}</td>
       <td>${r.route}</td>
@@ -238,681 +229,149 @@ function render(list){
       <td>${dur?dur.text:"-"}</td>
       <td>${km}</td>
       <td class="row-actions">
-        <button class="secondary" onclick="editEntry(${r.id})">✏️</button>
-        <button class="danger" onclick="delEntry(${r.id})">🗑️</button>
+        <button class="secondary" onclick="edit(${r.id})">✏️</button>
+        <button class="danger" onclick="del(${r.id})">🗑️</button>
       </td>
     </tr>`;
   });
-  $("table").innerHTML=html;
 
-  const h=Math.floor(sumMin/60), m=sumMin%60;
-  $("summary").innerHTML=list.length
-    ? `<span class="pill">Fahrten: ${list.length}</span>
+  $("table").innerHTML=html;
+  $("summary").innerHTML=rows.length
+    ? `<span class="pill">Fahrten: ${rows.length}</span>
        <span class="pill">KM: ${sumKm}</span>
-       <span class="pill">Dauer: ${h} Std ${m} Min</span>`
+       <span class="pill">Dauer: ${Math.floor(sumMin/60)} Std ${sumMin%60} Min</span>`
     : "Keine Daten";
 }
 
-function saveEntry(){
-  let route=$("route").value.trim();
-  if(route && !route.includes("Hin und Rückfahrt")) route+=" (Hin und Rückfahrt)";
-  const data={
+function save(){
+  let r=$("#route").value.trim();
+  if(r && !r.includes("Hin und Rückfahrt")) r+=" (Hin und Rückfahrt)";
+
+  let entry={
     id:editId ?? Date.now(),
-    datum:$("datum").value,
-    aufgabe:$("aufgabe").value,
-    route,
-    startzeit:$("startzeit").value,
-    endzeit:$("endzeit").value,
-    startkm:Number($("startkm").value),
-    endkm:Number($("endkm").value)
+    datum:$("#datum").value,
+    aufgabe:$("#aufgabe").value,
+    route:r,
+    startzeit:$("#startzeit").value,
+    endzeit:$("#endzeit").value,
+    startkm:+$("#startkm").value,
+    endkm:+$("#endkm").value
   };
-  let arr=Storage.getAll();
-  if(editId){ arr=arr.map(x=>x.id===editId?data:x); }
-  else arr.push(data);
+
+  let arr=Storage.get();
+  if(editId) arr=arr.map(x=>x.id===editId?entry:x);
+  else arr.push(entry);
+
   Storage.save(arr);
-  clearForm(); loadEntries(); showToast("Gespeichert");
+  clear();
+  load();
+  toast("Gespeichert");
 }
 
-function editEntry(id){
-  const r=Storage.getAll().find(e=>e.id===id); if(!r) return;
-  $("datum").value=r.datum;
-  $("aufgabe").value=r.aufgabe;
-  $("route").value=r.route.replace(" (Hin und Rückfahrt)","");
-  $("startzeit").value=r.startzeit;
-  $("endzeit").value=r.endzeit;
-  $("startkm").value=r.startkm;
-  $("endkm").value=r.endkm;
+function edit(id){
+  let r=Storage.get().find(x=>x.id===id);
+  if(!r) return;
+  $("#datum").value=r.datum;
+  $("#aufgabe").value=r.aufgabe;
+  $("#route").value=r.route.replace(" (Hin und Rückfahrt)","");
+  $("#startzeit").value=r.startzeit;
+  $("#endzeit").value=r.endzeit;
+  $("#startkm").value=r.startkm;
+  $("#endkm").value=r.endkm;
   editId=id;
-  $("saveBtn").textContent="Aktualisieren";
-  window.scrollTo({top:0,behavior:"smooth"});
+  $("#saveBtn").textContent="Aktualisieren";
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function delEntry(id){
+function del(id){
   if(!confirm("Eintrag löschen?")) return;
-  Storage.save(Storage.getAll().filter(r=>r.id!==id));
-  loadEntries();
-  showToast("Gelöscht");
+  Storage.save(Storage.get().filter(x=>x.id!==id));
+  load();
+  toast("Gelöscht");
 }
 
-function clearForm(){
+function clear(){
   editId=null;
-  $("saveBtn").textContent="Speichern";
-  $("datum").value=todayISO();
-  $("route").value="";
-  $("startzeit").value="";
-  $("endzeit").value="";
-  $("startkm").value="";
-  $("endkm").value="";
+  $("#saveBtn").textContent="Speichern";
+  $("#datum").value=todayISO();
+  $("#route").value="";
+  $("#startzeit").value="";
+  $("#endzeit").value="";
+  $("#startkm").value="";
+  $("#endkm").value="";
 }
 
+// Export
 function exportCSV(){
-  const arr=Storage.getAll();
-  let csv="Datum;Aufgabe;Route;Start;Ende;Start-KM;End-KM;KM;Dauer\n";
-  arr.forEach(r=>{
-    const km=r.endkm-r.startkm;
-    const dur=computeDuration(r.startzeit,r.endzeit)?.text||"";
+  let data=Storage.get();
+  let csv="Datum;Aufgabe;Route;Start;Ende;StartKM;EndKM;KM;Dauer\n";
+  data.forEach(r=>{
+    let km=r.endkm-r.startkm;
+    let dur=computeDuration(r.startzeit,r.endzeit)?.text||"";
     csv+=`${r.datum};${r.aufgabe};${r.route};${r.startzeit};${r.endzeit};${r.startkm};${r.endkm};${km};${dur}\n`;
   });
-  const blob=new Blob([csv],{type:"text/csv"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a"); a.href=url; a.download="fahrtenbuch.csv"; a.click();
-  URL.revokeObjectURL(url);
+  let blob=new Blob([csv],{type:"text/csv"});
+  let url=URL.createObjectURL(blob);
+  let a=document.createElement("a");a.href=url;a.download="fahrtenbuch.csv";a.click();
 }
 
+// Backup
 function backup(){
-  const data={type:"backup",date:new Date(),entries:Storage.getAll()};
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="fahrtenbuch-backup.json";
-  a.click();
+  let data=Storage.get();
+  let b=new Blob([JSON.stringify({entries:data},null,2)],{type:"application/json"});
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(b);
+  a.download="backup.json"; a.click();
 }
 
-function restore(evt){
-  const file=evt.target.files[0]; if(!file) return;
-  const r=new FileReader();
-  r.onload=()=>{
+// Restore
+function restore(e){
+  let file=e.target.files[0];
+  let fr=new FileReader();
+  fr.onload=function(){
     try{
-      const json=JSON.parse(r.result);
-      if(!json.entries) return alert("Ungültig");
-      if($("clearBeforeRestore").checked) Storage.save(json.entries);
-      else Storage.save([...Storage.getAll(),...json.entries]);
-      loadEntries();
+      let json=JSON.parse(fr.result);
+      if(!json.entries) return alert("Ungültige Datei");
+      if($("#clearBeforeRestore").checked) Storage.save(json.entries);
+      else Storage.save([...Storage.get(),...json.entries]);
+      load();
       alert("Restore OK");
-    }catch{ alert("Fehlerhafte Datei"); }
+    }catch{
+      alert("Fehlerhafte Datei!");
+    }
   };
-  r.readAsText(file);
+  fr.readAsText(file);
 }
 
-/* ========= Init ========= */
+// Init
 (function(){
-  $("datum").value=todayISO();
+  $("#datum").value=todayISO();
   populateMonths();
-  $("searchBtn").onclick=loadEntries;
-  $("searchResetBtn").onclick=()=>{$("search").value="";loadEntries();};
-  $("saveBtn").onclick=saveEntry;
-  $("resetBtn").onclick=clearForm;
-  $("monthSelect").onchange=loadEntries;
-  $("exportBtn").onclick=exportCSV;
-  $("backupBtn").onclick=backup;
-  $("restoreBtn").onclick=()=>$("restoreFile").click();
-  $("restoreFile").onchange=restore;
-  $("printBtn").onclick=()=>window.print();
-  loadEntries();
+  load();
 
-  // Installationshinweis zeigen
-  const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
-  if(!standalone) $("installHint").style.display="block";
+  $("#searchBtn").onclick=load;
+  $("#searchResetBtn").onclick=()=>{$("#search").value="";load();};
+  $("#saveBtn").onclick=save;
+  $("#resetBtn").onclick=clear;
+  $("#monthSelect").onchange=load;
+  $("#exportBtn").onclick=exportCSV;
+  $("#backupBtn").onclick=backup;
+  $("#restoreBtn").onclick=()=>$("#restoreFile").click();
+  $("#restoreFile").onchange=restore;
+  $("#printBtn").onclick=()=>window.print();
 
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('./service-worker.js');
+  // Installationshinweis
+  if(!window.navigator.standalone &&
+     !window.matchMedia('(display-mode: standalone)').matches){
+    $("#installHint").style.display="block";
+  }
+
+  // Service Worker
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("service-worker.js");
   }
 })();
 </script>
 
-</body>
-</html><!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Versorgung Eltern</title>
-
-<!-- PWA -->
-<link relwebmanifest
-<meta name="theme-color" content="#f2a45f" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="Versorgung Eltern" />
-icons/icon.svg
-
-<style>
-:root{
-  --bg:#f7f7f7; --card:#fff; --text:#111; --muted:#666;
-  --primary:#2e7d32; --secondary:#6b7280; --danger:#c62828; --border:#e5e7eb;
-}
-*{box-sizing:border-box}
-body{margin:0;padding:16px;background:var(--bg);color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial}
-h2,h3{margin-top:0}
-.header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.header img{width:36px;height:36px}
-
-.card{
-  background:var(--card);border:1px solid var(--border);border-radius:14px;
-  padding:16px;margin-bottom:18px;box-shadow:0 2px 4px rgba(0,0,0,.05)
-}
-label{font-size:15px;margin-top:8px;display:block}
-input,select{
-  width:100%;padding:14px;margin-top:4px;font-size:17px;border-radius:10px;border:1px solid #ccc;background:#fff
-}
-.row{display:flex;gap:12px;flex-wrap:wrap}.row>*{flex:1}
-
-button{
-  width:100%;padding:14px;margin-top:12px;border:none;border-radius:12px;
-  font-size:17px;color:#fff;background:var(--primary)
-}
-button.secondary{background:var(--secondary)}
-button.danger{background:var(--danger)}
-
-table{
-  width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:15px
-}
-th,td{padding:10px;border-bottom:1px solid #eee;vertical-align:top}
-th{background:#fafafa}
-
-.row-actions{display:flex;gap:6px}
-.row-actions button{width:auto;padding:6px 8px;font-size:14px}
-
-.pill{display:inline-block;background:#e0e0e0;border-radius:999px;padding:4px 8px;margin-right:6px;font-size:13px}
-.muted{color:var(--muted)}
-.toast{position:fixed;left:12px;right:12px;bottom:18px;background:#222;color:#fff;
-  padding:12px 14px;border-radius:10px;font-size:14px;opacity:.96;box-shadow:0 4px 12px rgba(0,0,0,.25);display:none;z-index:9}
-.hint{background:#fff7ed;border:1px dashed #fdba74;color:#92400e;border-radius:12px;padding:10px;margin-top:8px;font-size:14px}
-
-/* Druck nur die Liste */
-@media print{
-  body{padding:0;background:#fff}
-  .card:not(#printArea){display:none !important}
-  #printArea{border:none;box-shadow:none}
-}
-</style>
-</head>
-<body>
-
-<div class="header">
-  icons/icon.svg
-  <h2>Versorgung Eltern</h2>
-</div>
-
-<!-- Installationshinweis (nur wenn nicht als App gestartet) -->
-<div id="installHint" class="card" style="display:none">
-  <strong>Als App installieren:</strong>
-  <div class="hint">
-    In <b>Safari</b> öffnen → <b>Teilen</b> → <b>Zum Home‑Bildschirm</b> hinzufügen.
-  </div>
-</div>
-
-<!-- Formular -->
-<div class="card">
-  <div class="row">
-    <div>
-      <label>Datum</label>
-      <input type="date" id="datum" />
-    </div>
-    <div>
-      <label>Aufgabe</label>
-      <select id="aufgabe">
-        <option>Einkauf</option><option>Haushalt</option>
-        <option>Arztbesuch</option><option>Gartenarbeiten</option>
-        <option>Bürotätigkeiten</option><option>Handwerker</option>
-        <option>Versorgung Eltern</option><option>Sonstiges</option>
-      </select>
-    </div>
-  </div>
-
-  <label>Route</label>
-  <input type="text" id="route" placeholder="z. B. Rodenbach → Seligenstadt" />
-
-  <div class="row">
-    <div>
-      <label>Startzeit</label>
-      <input type="time" id="startzeit" />
-    </div>
-    <div>
-      <label>Endzeit</label>
-      <input type="time" id="endzeit" />
-    </div>
-  </div>
-
-  <div class="row">
-    <div>
-      <label>Start‑KM</label>
-      <input type="number" id="startkm" inputmode="numeric" />
-    </div>
-    <div>
-      <label>End‑KM</label>
-      <input type="number" id="endkm" inputmode="numeric" />
-    </div>
-  </div>
-
-  <div id="liveInfo" class="muted" style="margin-top:8px;"></div>
-
-  <div class="row">
-    <button id="saveBtn">Speichern</button>
-    <button id="resetBtn" class="secondary">Reset</button>
-  </div>
-</div>
-
-<!-- Suche -->
-<div class="card">
-  <h3>Suche & Monat</h3>
-  <div class="row">
-    <input type="text" id="search" placeholder="Route, Aufgabe …" />
-    <select id="monthSelect"></select>
-  </div>
-  <div class="row">
-    <button id="searchBtn" class="secondary">Suchen</button>
-    <button id="searchResetBtn" class="secondary">Reset</button>
-  </div>
-</div>
-
-<!-- Liste & Drucken -->
-<div class="card" id="printArea">
-  <h3>Liste</h3>
-  <div id="summary" class="muted">Keine Daten</div>
-  <table id="table"></table>
-  <button id="printBtn" class="secondary" style="margin-top:12px">🖨️ Ergebnisse drucken</button>
-</div>
-
-<!-- Export / Backup -->
-<div class="card">
-  <h3>Export / Backup</h3>
-  <button id="exportBtn">💾 CSV exportieren</button>
-  <button id="backupBtn" class="secondary">⬇️ Backup JSON</button>
-
-  <input type="file" id="restoreFile" accept=".json" style="display:none" />
-  <div class="row">
-    <button id="restoreBtn" class="secondary">⬆️ Restore JSON</button>
-    <label style="display:flex;align-items:center;gap:10px;flex:1">
-      <input type="checkbox" id="clearBeforeRestore" />
-      <span>Vor Restore löschen</span>
-    </label>
-  </div>
-</div>
-
-<div id="toast" class="toast"></div>
-
-<script>
-/* ========= Utility ========= */
-const $ = id => document.getElementById(id);
-const todayISO = () => new Date().toISOString().slice(0,10);
-
-function kmDiff(a,b){
-  a = Number(a); b = Number(b);
-  if(!Number.isFinite(a)||!Number.isFinite(b)) return null;
-  return Math.max(0, b - a);
-}
-function computeDuration(start, end){
-  if(!start||!end) return null;
-  const [sh,sm] = start.split(":").map(Number);
-  const [eh,em] = end.split(":").map(Number);
-  if([sh,sm,eh,em].some(Number.isNaN)) return null;
-  let s = sh*60+sm, e = eh*60+em;
-  if(e < s) e += 1440;
-  const diff = e - s;
-  return { minutes: diff, text: `${Math.floor(diff/60)} Std ${diff%60} Min` };
-}
-function showToast(msg){
-  const t = $("toast");
-  t.textContent = msg;
-  t.style.display = "block";
-  clearTimeout(showToast._to);
-  showToast._to = setTimeout(()=> t.style.display="none", 2200);
-}
-
-/* ========= Storage Layer (IndexedDB mit Fallback) ========= */
-const Storage = (() => {
-  const LS_KEY = "fahrtenbuch_entries_v1";
-  const LS_ID  = "fahrtenbuch_lastId_v1";
-  let backend = "idb"; // "idb" | "local"
-  let db = null;
-
-  function lsRead(){ try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; } }
-  function lsWrite(arr){ localStorage.setItem(LS_KEY, JSON.stringify(arr)); }
-  function lsNextId(){ const n = Number(localStorage.getItem(LS_ID) || "0") + 1; localStorage.setItem(LS_ID, String(n)); return n; }
-
-  function openIDB(){
-    return new Promise((resolve,reject)=>{
-      if(!("indexedDB" in window)) return reject(new Error("Kein IndexedDB"));
-      const req = indexedDB.open("fahrtenbuchDB_PWA_v1", 1);
-      req.onupgradeneeded = e => {
-        const db = e.target.result;
-        if(!db.objectStoreNames.contains("entries")){
-          db.createObjectStore("entries", { keyPath:"id", autoIncrement:true });
-        }
-      };
-      req.onsuccess = e => resolve(e.target.result);
-      req.onerror = () => reject(req.error || new Error("IDB Fehler"));
-    });
-  }
-
-  async function init(){
-    try {
-      db = await openIDB();
-      backend = "idb";
-      console.info("Speicher: IndexedDB");
-    } catch {
-      backend = "local";
-      db = null;
-      console.info("Speicher: localStorage (Fallback)");
-    }
-  }
-
-  function idbAll(){
-    return new Promise((resolve,reject)=>{
-      const tx = db.transaction("entries","readonly");
-      const st = tx.objectStore("entries");
-      const rows = [];
-      const c = st.openCursor();
-      c.onsuccess = e => { const cur = e.target.result; if(cur){ rows.push(cur.value); cur.continue(); } else resolve(rows); };
-      c.onerror = () => reject(c.error);
-    });
-  }
-  function idbAdd(obj){
-    return new Promise((resolve,reject)=>{
-      const tx = db.transaction("entries","readwrite");
-      tx.objectStore("entries").add(obj).onsuccess = () => resolve();
-      tx.onerror = () => reject(tx.error);
-    });
-  }
-  function idbPut(obj){
-    return new Promise((resolve,reject)=>{
-      const tx = db.transaction("entries","readwrite");
-      tx.objectStore("entries").put(obj).onsuccess = () => resolve();
-      tx.onerror = () => reject(tx.error);
-    });
-  }
-  function idbDelete(id){
-    return new Promise((resolve,reject)=>{
-      const tx = db.transaction("entries","readwrite");
-      tx.objectStore("entries").delete(id).onsuccess = () => resolve();
-      tx.onerror = () => reject(tx.error);
-    });
-  }
-  function idbClear(){
-    return new Promise((resolve,reject)=>{
-      const tx = db.transaction("entries","readwrite");
-      tx.objectStore("entries").clear().onsuccess = () => resolve();
-      tx.onerror = () => reject(tx.error);
-    });
-  }
-
-  return {
-    async init(){ await init(); },
-    backend: () => backend,
-    async getAll(){ return backend==="idb" ? idbAll() : lsRead(); },
-    async add(obj){
-      if(backend==="idb"){ await idbAdd(obj); return; }
-      const arr = lsRead(); obj.id = lsNextId(); arr.push(obj); lsWrite(arr);
-    },
-    async put(obj){
-      if(backend==="idb"){ await idbPut(obj); return; }
-      const arr = lsRead(); const i = arr.findIndex(x=>x.id===obj.id); if(i>=0) arr[i]=obj; lsWrite(arr);
-    },
-    async delete(id){
-      if(backend==="idb"){ await idbDelete(id); return; }
-      const arr = lsRead().filter(x=>x.id!==id); lsWrite(arr);
-    },
-    async clear(){
-      if(backend==="idb"){ await idbClear(); return; }
-      lsWrite([]); localStorage.setItem(LS_ID,"0");
-    }
-  };
-})();
-
-/* ========= App-Logik ========= */
-let editId = null;
-
-function populateMonths(){
-  const sel = $("monthSelect");
-  sel.innerHTML = "";
-  const now = new Date();
-  const currVal = now.toISOString().slice(0,7);
-  for(let i=0;i<24;i++){
-    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
-    const val = d.toISOString().slice(0,7);
-    const txt = d.toLocaleString("de-DE",{month:"long",year:"numeric"});
-    const opt = document.createElement("option");
-    opt.value = val; opt.textContent = txt;
-    sel.appendChild(opt);
-  }
-  sel.value = currVal;
-}
-
-function updateLiveInfo(){
-  const km = kmDiff($("startkm").value, $("endkm").value);
-  const dur = computeDuration($("startzeit").value, $("endzeit").value);
-  const parts = [];
-  if(km!==null) parts.push(`Δ KM: ${km}`);
-  if(dur) parts.push(`Dauer: ${dur.text}`);
-  $("liveInfo").textContent = parts.join(" • ");
-}
-
-async function loadEntries(){
-  const rows = await Storage.getAll();
-  render(rows);
-}
-
-function render(rows){
-  const q = $("search").value.trim().toLowerCase();
-  const month = $("monthSelect").value;
-
-  const list = rows
-    .filter(r => r.datum?.startsWith(month))
-    .filter(r => !q || (r.route?.toLowerCase().includes(q) || r.aufgabe?.toLowerCase().includes(q)))
-    .sort((a,b)=> a.datum.localeCompare(b.datum));
-
-  let sumKm=0, sumMin=0;
-  let html = `
-    <tr>
-      <th>Datum</th><th>Aufgabe</th><th>Route</th>
-      <th>Start</th><th>Ende</th><th>Dauer</th><th>KM</th><th></th>
-    </tr>
-  `;
-
-  list.forEach(r=>{
-    const km = kmDiff(r.startkm, r.endkm) ?? 0;
-    const dur = computeDuration(r.startzeit, r.endzeit);
-    sumKm += km;
-    sumMin += dur?.minutes ?? 0;
-
-    html += `
-      <tr>
-        <td>${r.datum||""}</td>
-        <td>${r.aufgabe||""}</td>
-        <td>${r.route||""}</td>
-        <td>${r.startzeit||""}</td>
-        <td>${r.endzeit||""}</td>
-        <td>${dur?dur.text:"-"}</td>
-        <td>${km}</td>
-        <td class="row-actions">
-          <button class="secondary" onclick="editEntry(${r.id})">✏️</button>
-          <button class="danger" onclick="delEntry(${r.id})">🗑️</button>
-        </td>
-      </tr>
-    `;
-  });
-
-  $("table").innerHTML = html;
-  const h = Math.floor(sumMin/60), m = sumMin % 60;
-  $("summary").innerHTML = list.length
-    ? `<span class="pill">Fahrten: ${list.length}</span>
-       <span class="pill">KM: ${sumKm}</span>
-       <span class="pill">Dauer: ${h} Std ${m} Min</span>`
-    : "Keine Daten";
-}
-
-async function saveEntry(){
-  let routeText = $("route").value.trim();
-  if(routeText && !routeText.includes("Hin und Rückfahrt")){
-    routeText += " (Hin und Rückfahrt)";
-  }
-  const data = {
-    datum: $("datum").value || todayISO(),
-    aufgabe: $("aufgabe").value,
-    route: routeText,
-    startzeit: $("startzeit").value,
-    endzeit: $("endzeit").value,
-    startkm: Number($("startkm").value),
-    endkm: Number($("endkm").value)
-  };
-  if(editId != null){ data.id = editId; await Storage.put(data); }
-  else { await Storage.add(data); }
-
-  clearForm();
-  await loadEntries();
-  showToast("Gespeichert");
-}
-
-function clearForm(){
-  editId = null;
-  $("saveBtn").textContent = "Speichern";
-  $("datum").value = todayISO();
-  $("route").value = "";
-  $("startzeit").value = "";
-  $("endzeit").value = "";
-  $("startkm").value = "";
-  $("endkm").value = "";
-  updateLiveInfo();
-}
-
-function editEntry(id){
-  Storage.getAll().then(rows=>{
-    const r = rows.find(x=>x.id===id);
-    if(!r) return;
-    $("datum").value = r.datum || todayISO();
-    $("aufgabe").value = r.aufgabe || "Sonstiges";
-    $("route").value = (r.route || "").replace(" (Hin und Rückfahrt)","");
-    $("startzeit").value = r.startzeit || "";
-    $("endzeit").value = r.endzeit || "";
-    $("startkm").value = r.startkm ?? "";
-    $("endkm").value = r.endkm ?? "";
-    editId = id;
-    $("saveBtn").textContent = "Aktualisieren";
-    updateLiveInfo();
-    window.scrollTo({top:0,behavior:"smooth"});
-  });
-}
-
-async function delEntry(id){
-  if(!confirm("Diesen Eintrag löschen?")) return;
-  await Storage.delete(id);
-  await loadEntries();
-  showToast("Eintrag gelöscht");
-}
-
-/* ====== Export / Backup / Restore ====== */
-async function exportCSV(){
-  const rows = await Storage.getAll();
-  const month = $("monthSelect").value;
-  const q = $("search").value.trim().toLowerCase();
-
-  const list = rows
-    .filter(r=>r.datum?.startsWith(month))
-    .filter(r=>!q || (r.route?.toLowerCase().includes(q) || r.aufgabe?.toLowerCase().includes(q)));
-
-  let csv = "Datum;Aufgabe;Route;Start;Ende;Start-KM;End-KM;KM;Dauer\n";
-  list.forEach(r=>{
-    const km = (Number(r.endkm)-Number(r.startkm))||0;
-    const dur = computeDuration(r.startzeit, r.endzeit)?.text || "";
-    csv += `${r.datum};${r.aufgabe};${r.route};${r.startzeit};${r.endzeit};${r.startkm};${r.endkm};${km};${dur}\n`;
-  });
-
-  const blob = new Blob([csv], {type:"text/csv"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "fahrtenbuch.csv"; a.click();
-  URL.revokeObjectURL(url);
-}
-
-async function makeBackup(){
-  const entries = await Storage.getAll();
-  const data = { type:"fahrtenbuch-backup", version:1, createdAt:new Date().toISOString(), entries };
-  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "fahrtenbuch-backup.json"; a.click();
-  URL.revokeObjectURL(url);
-}
-
-function restoreBackup(evt){
-  const file = evt.target.files?.[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = async () => {
-    try {
-      const json = JSON.parse(reader.result);
-      if(json.type !== "fahrtenbuch-backup") { alert("Kein gültiges Backup."); return; }
-
-      const doImport = async () => {
-        for(const r of (json.entries||[])){
-          const {id, ...rest} = r; // neue IDs vergeben
-          await Storage.add(rest);
-        }
-        await loadEntries();
-        alert("Restore abgeschlossen.");
-      };
-
-      if($("clearBeforeRestore").checked){
-        await Storage.clear();
-        await doImport();
-      } else {
-        await doImport();
-      }
-    } catch {
-      alert("Backup-Datei fehlerhaft.");
-    }
-  };
-  reader.readAsText(file);
-}
-
-/* ====== Init & Events ====== */
-(async function init(){
-  $("datum").value = todayISO();
-  populateMonths();
-  ["startkm","endkm","startzeit","endzeit"].forEach(id=>{
-    $(id).addEventListener("input",updateLiveInfo);
-  });
-
-  $("saveBtn").onclick = saveEntry;
-  $("resetBtn").onclick = clearForm;
-  $("searchBtn").onclick = loadEntries;
-  $("searchResetBtn").onclick = ()=>{ $("search").value=""; loadEntries(); };
-  $("monthSelect").onchange = loadEntries;
-  $("exportBtn").onclick = exportCSV;
-  $("backupBtn").onclick = makeBackup;
-  $("restoreBtn").onclick = ()=> $("restoreFile").click();
-  $("restoreFile").addEventListener("change", restoreBackup);
-  $("printBtn").onclick = ()=> window.print();
-
-  await Storage.init();
-  await loadEntries();
-  updateLiveInfo();
-
-  // Installationshinweis zeigen, wenn nicht im Standalone-Modus
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-  if(!isStandalone){
-    document.getElementById("installHint").style.display = "block";
-  }
-
-  // Service Worker registrieren (über HTTPS)
-  if('serviceWorker' in navigator){
-    try { await navigator.serviceWorker.register('./service-worker.js'); }
-    catch(e){ console.warn('SW-Registrierung fehlgeschlagen:', e); }
-  }
-})();
-</script>
 </body>
 </html>
