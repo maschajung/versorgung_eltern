@@ -343,13 +343,26 @@ reader.onload=function(){
 try{
 
 let json=JSON.parse(reader.result)
-
+// Format 1: { entries: [...] }
 if(json.entries){
 Storage.save(json.entries)
-load()
 }
 
-}catch{
+// Format 2: direkte Liste [...]
+else if(Array.isArray(json)){
+Storage.save(json)
+}
+
+else{
+alert("Backup Format unbekannt")
+return
+}
+
+load()
+
+}catch(err){
+
+console.error(err)
 alert("Ungültige Datei")
 }
 
