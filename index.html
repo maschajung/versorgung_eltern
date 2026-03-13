@@ -186,10 +186,10 @@ let rows=Storage.get()||[]
 
 rows.sort((a,b)=>{
 
-let d1=new Date((b.datum||"")+" "+(b.startzeit||"00:00"))
-let d2=new Date((a.datum||"")+" "+(a.startzeit||"00:00"))
+let da = new Date(a.datum || "1970-01-01")
+let db = new Date(b.datum || "1970-01-01")
 
-return d1-d2
+return db-da
 
 })
 
