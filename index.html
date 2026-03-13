@@ -9,22 +9,111 @@
 <meta name="theme-color" content="#f2a45f">
 
 <style>
-body{font-family:Arial;background:#f7f7f7;padding:16px;margin:0}
-h2,h3{margin-top:0}
-.card{background:#fff;padding:16px;border-radius:12px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.row>*{flex:1}
-input,select,textarea{width:100%;padding:8px;margin-top:4px}
-textarea{min-height:60px}
-button{padding:10px;border:none;border-radius:8px;background:#2e7d32;color:#fff;margin-top:8px;cursor:pointer}
-button.secondary{background:#6b7280}
-button.danger{background:#c62828}
-table{width:100%;max-width:100%;table-layout:fixed;word-wrap:break-word;border-collapse:collapse;margin-top:10px}
-td,th{padding:6px;border-bottom:1px solid #eee;overflow-wrap:break-word;}
-.actions button{margin-right:4px}
-.pill{display:inline-block;background:#eee;padding:4px 8px;border-radius:20px;margin-right:6px;font-size:12px}
-@media (max-width:600px){table{font-size:12px;display:block;overflow-x:auto;}}
-@media print{button,.no-print{display:none} body{background:#fff}}
+body {
+  font-family: Arial;
+  background: #f7f7f7;
+  padding: 16px;
+  margin: 0;
+}
+
+h2, h3 {
+  margin-top: 0;
+}
+
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.row > * {
+  flex: 1;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+}
+
+textarea {
+  min-height: 60px;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #2e7d32;
+  color: #fff;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #6b7280;
+}
+
+button.danger {
+  background: #c62828;
+}
+
+/* Tabelle responsive & Spalten umbrechen */
+table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;       /* gleiche Spaltenbreite */
+  word-wrap: break-word;     /* Zeilen umbrechen */
+  margin-top: 10px;
+}
+
+td, th {
+  padding: 6px;
+  border-bottom: 1px solid #eee;
+  overflow-wrap: break-word; /* Zeilen umbrechen */
+}
+
+.actions button {
+  margin-right: 4px;
+}
+
+.pill {
+  display: inline-block;
+  background: #eee;
+  padding: 4px 8px;
+  border-radius: 20px;
+  margin-right: 6px;
+  font-size: 12px;
+}
+
+/* Mobile Anpassung für kleine Bildschirme */
+@media (max-width: 600px) {
+  table {
+    display: block;
+    overflow-x: auto;   /* horizontales Scrollen erlauben */
+    font-size: 12px;
+  }
+}
+
+/* Druckansicht */
+@media print {
+  button,
+  .no-print {
+    display: none;
+  }
+  body {
+    background: #fff;
+  }
+}
 </style>
 </head>
 
