@@ -378,7 +378,32 @@ $("startkm").value=""
 $("endkm").value=""
 $("notes").value=""
 }
+function exportCSV() {
+  let rows = Storage.get(); // Holt alle Einträge aus localStorage
 
+  // Kopfzeile für CSV
+  let csv = "Datum;Aufgabe;Route;Startzeit;Endzeit;StartKM;EndKM;KM_berechnet;Dauer_Stunden;Dauer_Text;Notizen\n";
+
+  rows.forEach(r => {
+    let km = (r.endkm||0) - (r.startkm||0);
+    let durMin = duration(r.startzeit, r.endzeit);
+    let durHours = (durMin / 60).toFixed(2);
+
+    // Für CSV unbedingt Rohdatum aus Storage verwenden, nicht formatDate()
+    let datum = r.datum || "";
+
+    let notes = (r.notes||"").replace(/;/g, ","); // Semikolons in Notizen ersetzen
+
+    csv += `${datum};${r.aufgabe||""};${r.route||""};${r.startzeit||""};${r.endzeit||""};${r.startkm||""};${r.endkm||""};${km};${durHours};${durationText(durMin)};${notes}\n`;
+  });
+
+  // CSV-Datei erstellen und herunterladen
+  let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "fahrtenbuch_export.csv";
+  a.click();
+}
 function backup(){
 let data=JSON.stringify({entries:Storage.get()},null,2)
 let blob=new Blob([data])
