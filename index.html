@@ -153,7 +153,15 @@ return e-s
 function durationText(min){
 return Math.floor(min/60)+" Std "+(min%60)+" Min"
 }
+function formatDate(d){
 
+if(!d) return ""
+
+let date = new Date(d)
+
+return date.toLocaleDateString("de-DE")
+
+}
 function loadMonths(){
 
 let sel=$("monthFilter")
@@ -229,7 +237,7 @@ sumMin+=dur
 
 html+=`
 <tr>
-<td>${r.datum||""}</td>
+<td>${formatDate(r.datum)}</td>
 <td>${r.aufgabe||""}</td>
 <td>${r.route||""}</td>
 <td>${km}</td>
