@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -41,6 +40,7 @@ td,th{padding:6px;border-bottom:1px solid #eee}
 <label>Datum</label>
 <input type="date" id="datum">
 </div>
+
 <div>
 <label>Aufgabe</label>
 <select id="aufgabe">
@@ -64,6 +64,7 @@ td,th{padding:6px;border-bottom:1px solid #eee}
 <label>Startzeit</label>
 <input type="time" id="startzeit">
 </div>
+
 <div>
 <label>Endzeit</label>
 <input type="time" id="endzeit">
@@ -75,6 +76,7 @@ td,th{padding:6px;border-bottom:1px solid #eee}
 <label>Start KM</label>
 <input type="number" id="startkm">
 </div>
+
 <div>
 <label>Ende KM</label>
 <input type="number" id="endkm">
@@ -108,7 +110,6 @@ td,th{padding:6px;border-bottom:1px solid #eee}
 <h3>Liste</h3>
 
 <div id="summary"></div>
-
 <table id="table"></table>
 
 <button onclick="window.print()" class="secondary">🖨️ Drucken</button>
@@ -181,14 +182,17 @@ sel.value=cur
 
 function load(){
 
-let rows=Storage.get()
+let rows=Storage.get()||[]
 
 rows.sort((a,b)=>{
-let da = new Date(a.datum || 0)
-let db = new Date(b.datum || 0)
-return db - da
+
+let d1=new Date((b.datum||"")+" "+(b.startzeit||"00:00"))
+let d2=new Date((a.datum||"")+" "+(a.startzeit||"00:00"))
+
+return d1-d2
+
 })
-  
+
 let q=($("search").value||"").toLowerCase()
 let m=$("monthFilter").value
 
@@ -225,9 +229,9 @@ sumMin+=dur
 
 html+=`
 <tr>
-<td>${r.datum}</td>
-<td>${r.aufgabe}</td>
-<td>${r.route}</td>
+<td>${r.datum||""}</td>
+<td>${r.aufgabe||""}</td>
+<td>${r.route||""}</td>
 <td>${km}</td>
 <td>${durationText(dur)}</td>
 <td>${r.notes||""}</td>
@@ -270,12 +274,10 @@ arr.push(entry)
 }
 
 Storage.save(arr)
-
 editId=null
-
 clearForm()
-
 load()
+
 }
 
 function edit(id){
@@ -296,12 +298,13 @@ editId=id
 
 function removeRow(id){
 
-if(!confirm("Eintrag löschen?")) return
+if(!confirm("Eintrag löschen?"))return
 
 let arr=Storage.get().filter(r=>r.id!==id)
 Storage.save(arr)
 
 load()
+
 }
 
 function clearForm(){
@@ -313,32 +316,6 @@ $("endzeit").value=""
 $("startkm").value=""
 $("endkm").value=""
 $("notes").value=""
-
-}
-
-function exportCSV(){
-
-let rows=Storage.get()
-
-let csv="Datum;Aufgabe;Route;Startzeit;Endzeit;StartKM;EndKM;KM_berechnet;Dauer_Stunden;Dauer_Text;Notizen\n"
-
-rows.forEach(r=>{
-
-let km=(r.endkm||0)-(r.startkm||0)
-let durMin=duration(r.startzeit,r.endzeit)
-let durHours=(durMin/60).toFixed(2)
-
-let notes=(r.notes||"").replace(/;/g,",")
-
-csv+=`${r.datum};${r.aufgabe};${r.route};${r.startzeit};${r.endzeit};${r.startkm};${r.endkm};${km};${durHours};${durationText(durMin)};${notes}\n`
-
-})
-
-let blob=new Blob([csv])
-let a=document.createElement("a")
-a.href=URL.createObjectURL(blob)
-a.download="fahrtenbuch_export.csv"
-a.click()
 
 }
 
@@ -368,16 +345,12 @@ try{
 let json=JSON.parse(reader.result)
 
 if(json.entries){
-
 Storage.save(json.entries)
 load()
-
 }
 
 }catch{
-
 alert("Ungültige Datei")
-
 }
 
 }
@@ -393,39 +366,13 @@ load()
 
 }
 
-window.addEventListener("beforeinstallprompt",e=>{
-
-e.preventDefault()
-
-deferredPrompt=e
-
-$("installBtn").style.display="block"
-
-})
-
-$("installBtn").addEventListener("click",async()=>{
-
-if(!deferredPrompt)return
-
-deferredPrompt.prompt()
-
-deferredPrompt=null
-
-})
-
 (function(){
 
 $("datum").value=today()
-
 loadMonths()
-
 load()
 
 $("restoreFile").addEventListener("change",restore)
-
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js")
-}
 
 })()
 
