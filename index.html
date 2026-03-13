@@ -182,7 +182,8 @@ sel.value=cur
 function load(){
 
 let rows=Storage.get()
-
+rows.sort((a,b)=> new Date(b.datum) - new Date(a.datum))
+  
 let q=($("search").value||"").toLowerCase()
 let m=$("monthFilter").value
 
